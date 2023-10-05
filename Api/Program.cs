@@ -1,3 +1,4 @@
+using Api.Configurations;
 using Api.Data;
 using Api.Dtos.MappingProfiles;
 using Api.Services;
@@ -9,7 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 builder.Services.AddScoped<IDependentsService, DependentsService>();
 builder.Services.AddScoped<IEmployeeDataRepository, EmployeeDataRepository>();
+builder.Services.AddTransient<IBenefitCalculator, BaseBenefitCalculator>();
+builder.Services.AddTransient<IBenefitCalculator, HighSalaryBenefitCalculator>();
+builder.Services.AddTransient<IBenefitCalculator, DependentAgeSeniorThresholdBenefitCalculator>();
+builder.Services.AddTransient<IPayrollService, PayrollService>();
 
+builder.Services.Configure<PayrollConfig>(builder.Configuration.GetSection("PayrollConfig"));
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddMemoryCache();
 

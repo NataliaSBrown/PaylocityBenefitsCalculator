@@ -106,5 +106,22 @@ public class EmployeeIntegrationTests : IntegrationTest
         var response = await HttpClient.GetAsync($"/api/v1/employees/{int.MinValue}");
         await response.ShouldReturn(HttpStatusCode.NotFound);
     }
+
+    [Fact]
+    public async Task WhenAskedForAnEmployeePaycheck_ShouldReturnCorrectEmployeePaycheck()
+    {
+        var response = await HttpClient.GetAsync("/api/v1/employees/1/paycheck");
+        var paycheck = new GetEmployeePaycheckDto
+        {
+            Id = 1,
+            FirstName = "LeBron",
+            LastName = "James",
+            Salary = 75420.99m,
+            DateOfBirth = new DateTime(1984, 12, 30),
+            Paycheck = 2862.34m
+        };
+
+        await response.ShouldReturn(HttpStatusCode.OK, paycheck);
+    }
 }
 
