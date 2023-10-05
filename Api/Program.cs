@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IEmployeesService, EmployeesService>();
+builder.Services.AddScoped<IDependentsService, DependentsService>();
 builder.Services.AddScoped<IEmployeeDataRepository, EmployeeDataRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));

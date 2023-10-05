@@ -18,7 +18,6 @@ public class EmployeesController : ControllerBase
         _employeesService = employeesService;
     }
 
-
     [SwaggerOperation(Summary = "Get employee by id")]
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiResponse<GetEmployeeDto>>> Get(int id)
