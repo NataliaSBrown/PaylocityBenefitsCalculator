@@ -1,5 +1,6 @@
 ﻿using Api.Configurations;
 using Api.Dtos.Employee;
+using AutoMapper;
 using Microsoft.Extensions.Options;
 
 namespace Api.Services
@@ -12,11 +13,13 @@ namespace Api.Services
     public class PayrollService : IPayrollService
     {
         private readonly IEnumerable<IBenefitCalculator> _benefitCalculators;
+        private readonly IMapper _mapper;
         private readonly PayrollConfig _config;
 
-        public PayrollService(IEnumerable<IBenefitCalculator> benefitCalculators, IOptions<PayrollConfig> config)
+        public PayrollService(IEnumerable<IBenefitCalculator> benefitCalculators, IMapper mapper, IOptions<PayrollConfig> config)
         {
             _benefitCalculators = benefitCalculators ?? throw new ArgumentNullException(nameof(benefitCalculators));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _config = config?.Value ?? throw new ArgumentNullException(nameof(config));
         }
 
@@ -25,7 +28,7 @@ namespace Api.Services
             decimal paycheckDeductions = CalculatePaycheckDeductions(employee);
             decimal paycheckTotal = CalculatePaycheckTotal(employee.Salary, paycheckDeductions);
 
-            return MapToPaycheckDto(employee, paycheckTotal);
+            return CreateEmployeePaycheckDto(employee, paycheckTotal);
         }
 
         private decimal CalculatePaycheckDeductions(GetEmployeeDto employee)
@@ -39,17 +42,11 @@ namespace Api.Services
             return Math.Round(paycheckTotal, 2, MidpointRounding.ToZero);
         }
 
-        private static GetEmployeePaycheckDto MapToPaycheckDto(GetEmployeeDto employee, decimal paycheck)
+        private GetEmployeePaycheckDto CreateEmployeePaycheckDto(GetEmployeeDto employee, decimal paycheckTotal)
         {
-            return new GetEmployeePaycheckDto
-            {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Salary = employee.Salary,
-                DateOfBirth = employee.DateOfBirth,                
-                Paycheck = paycheck
-            };
+            var employeePaycheck = _mapper.Map<GetEmployeePaycheckDto>(employee);
+            employeePaycheck.Paycheck = paycheckTotal;
+            return employeePaycheck;
         }
     }
 }
