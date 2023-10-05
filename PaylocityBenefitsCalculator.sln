@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{9C7E8DBB-5135-4511-8E1E-26C83D58B2F5}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{9C7E8DBB-5135-4511-8E1E-26C83D58B2F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTests", "ApiTests\ApiTests.csproj", "{809152BC-858C-4757-8C5A-AA35E061750B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiTests", "ApiTests\ApiTests.csproj", "{809152BC-858C-4757-8C5A-AA35E061750B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EmployeeDB", "EmployeeDB\EmployeeDB.sqlproj", "{395A7E37-A51E-40EA-97F6-52D2E1B14E24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,17 @@ Global
 		{809152BC-858C-4757-8C5A-AA35E061750B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{809152BC-858C-4757-8C5A-AA35E061750B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{809152BC-858C-4757-8C5A-AA35E061750B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395A7E37-A51E-40EA-97F6-52D2E1B14E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395A7E37-A51E-40EA-97F6-52D2E1B14E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395A7E37-A51E-40EA-97F6-52D2E1B14E24}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{395A7E37-A51E-40EA-97F6-52D2E1B14E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395A7E37-A51E-40EA-97F6-52D2E1B14E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395A7E37-A51E-40EA-97F6-52D2E1B14E24}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E970414B-9E1A-41AD-A2EF-6390613BEE1C}
 	EndGlobalSection
 EndGlobal
