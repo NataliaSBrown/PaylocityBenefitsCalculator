@@ -12,10 +12,12 @@ namespace Api.Controllers;
 public class EmployeesController : ControllerBase
 {
     private readonly IEmployeesService _employeesService;
+    private readonly IPayrollService _payrollService;
 
-    public EmployeesController(IEmployeesService employeesService)
+    public EmployeesController(IEmployeesService employeesService, IPayrollService payrollService)
     {
         _employeesService = employeesService;
+        _payrollService = payrollService;
     }
 
     [SwaggerOperation(Summary = "Get employee by id")]
@@ -77,6 +79,39 @@ public class EmployeesController : ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"An error occurred while fetching data for {nameof(GetAll)}: {ex.Message}");
+        }
+    }
+
+    [SwaggerOperation(Summary = "Calculate Employee's paycheck")]
+    [HttpGet("{id}/paycheck")]
+    public async Task<ActionResult<ApiResponse<GetEmployeePaycheckDto>>> GetEmployeePaycheck(int id)
+    {
+        try
+        {
+            var employee = await _employeesService.GetEmployeeByIdAsync(id);
+
+            if (employee == null)
+            {
+                return NotFound(new ApiResponse<GetEmployeeDto>
+                {
+                    Success = false,
+                    Error = $"Employee is not found with specified ID {id}"
+                });
+            }
+
+            GetEmployeePaycheckDto paycheck = _payrollService.CalculatePaycheck(employee);
+
+            return Ok(new ApiResponse<GetEmployeePaycheckDto>
+            {
+                Success = true,
+                Data = paycheck
+            });
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"An error occurred while fetching data for {nameof(GetEmployeePaycheck)}: {ex.Message}");
         }
     }
 }
